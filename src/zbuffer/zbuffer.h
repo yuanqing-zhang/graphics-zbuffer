@@ -1,3 +1,6 @@
+#ifndef _ZBUFFER_H_
+#define _ZBUFFER_H_
+
 #include "../io/obj.h"
 #include "utils.h"
 #include <Eigen/Dense>
@@ -14,6 +17,8 @@ public:
     void render();
 
     float *get_pixel(){return pixels;}
-    void set_obj(objLoader o){obj = o; std::cout << obj.v_mat << std::endl;}
+    void set_obj(objLoader o){obj = o;}
 
 };
+
+#endif

@@ -19,4 +19,4 @@ public:
     float *get_pixel(){return pixels;}
     void set_obj(objLoader o){obj = o;}
 
-}
+};

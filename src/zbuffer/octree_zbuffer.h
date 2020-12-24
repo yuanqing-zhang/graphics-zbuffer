@@ -1,3 +1,6 @@
+#ifndef _OCTREE_ZBUFFER_H_
+#define _OCTREE_ZBUFFER_H_
+
 #include "../io/obj.h"
 #include <Eigen/Dense>
 
@@ -20,4 +23,6 @@ public:
     void set_obj(objLoader o){obj = o;}
 
     
-}
+};
+
+#endif
