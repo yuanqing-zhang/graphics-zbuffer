@@ -12,6 +12,7 @@ include_directories(${EIGEN3_INCLUDE_DIRS})
 
 
 find_package(GLUT REQUIRED)
+message(STATUS "GLUT path is ${GLUT_INCLUDE_DIRS}")
 include_directories(${GLUT_INCLUDE_DIRS})
 link_directories(${GLUT_LIBRARY_DIRS})
 add_definitions(${GLUT_DEFINITIONS})
@@ -20,6 +21,7 @@ if(NOT GLUT_FOUND)
 endif(NOT GLUT_FOUND)
 
 find_package(OpenGL REQUIRED)
+message(STATUS "OpenGL path is ${OpenGL_INCLUDE_DIR}")
 include_directories(${OpenGL_INCLUDE_DIR})
 link_directories(${OpenGL_LIBRARY_DIRS})
 add_definitions(${OpenGL_DEFINITIONS})
