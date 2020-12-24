@@ -12,8 +12,8 @@ using namespace std;
 using namespace Eigen;
 
 
-int width = 500;
-int height = 500;
+int width = 512;
+int height = 512;
 View view;
 string type;
 objLoader obj;
