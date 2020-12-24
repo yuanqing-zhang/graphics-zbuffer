@@ -43,7 +43,7 @@ void display(void)
     }
     else if(type == "3")
     {
-        BasicZBuffer hiera_zbuff(width, height);
+        HieraZBuffer hiera_zbuff(width, height);
         hiera_zbuff.set_obj(obj);
 	    hiera_zbuff.render();
 	    glDrawPixels(width, height, GL_RGB, GL_FLOAT, hiera_zbuff.get_pixel());

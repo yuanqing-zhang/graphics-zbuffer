@@ -68,3 +68,15 @@ float cal_diffuse(Vector3f A,
 
     return diffuse;
 }
+
+int get_level(int width, int height)
+{
+    int level = 1;
+    while (width / 2 >= 1)
+    {
+        level ++;
+        width = width / 2;
+    }
+
+    return level;
+}

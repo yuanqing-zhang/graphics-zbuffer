@@ -22,6 +22,8 @@
 - 编译工具：cMake 3.18.2
 - 库：Eigen 3.3.7，OpenGL，GLUT
 
+
+
 使用：
 
 ```shell
@@ -38,3 +40,23 @@ make
 
 
 
+算法描述：
+
+zbuffer：
+
+- 每个pixel和每个triangle求交，选最小的depth。
+
+zbuffer(basic)：
+
+- 读取每个triangle，找到triangle的bounding box，遍历，判断该像素是否与三角形相交，如果相交计算depth并更新depth buffer。（注意考虑四角形）
+
+hierarchical zbuffer(basic)：
+
+- 为什么要用层次z-buffer，可以快速确定一个polygon是不是隐藏，而不用pixel-by-pixel去确定
+- 构造z-pyramid: 初始图像大小作为最后一层，下一层是上一层下采样，min pooling
+- 维护z-pyramid: 每次更改z值都要传递下去
+- 测试visubility：找到最精确的能包括这个polygon的，如果值>max_depth of polygon，那么就被隐藏，如果没有被隐藏，那么更新层次z-buffer
+
+hierarchical zbuffer(octree)：
+
+- 首先，将几何体放入八叉树，将每个图元与最小的封闭八叉树立方体相关联。然后，我们从八叉树的根节点开始，并使用以下递归步骤进行渲染：首先，检查八叉树立方体是否与视锥相交。如果没有，我们就完成了。如果多维数据集确实与查看视锥相交，则我们将多维数据集的面进行扫描转换，以确定是否隐藏了整个多维数据集。如果多维数据集是隐藏的，那么我们就完成了。否则，我们将扫描转换与该多维数据集关联的任何几何图形，然后以从前到后的顺序递归地渲染其子级。

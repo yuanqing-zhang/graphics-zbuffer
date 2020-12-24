@@ -21,6 +21,12 @@ BasicZBuffer::BasicZBuffer(int w, int h) : width(w), height(h)
 
 void BasicZBuffer::render_triangle(Vector3f A, Vector3f B, Vector3f C)
 {
+    //scale and translate to the center of image
+    Vector3f center(width / 2, width / 2, 0);
+    A = A * width / 2 + center;
+    B = B * width / 2 + center;
+    C = C * width / 2 + center;
+
     // find bounding box of triangle
     float minx = min(min(A(0), B(0)), C(0));
     float maxx = max(max(A(0), B(0)), C(0));
@@ -69,12 +75,6 @@ void BasicZBuffer::render()
         A << obj.v_mat.block(0, obj.f_set[f_idx][0], 3, 1);
         B << obj.v_mat.block(0, obj.f_set[f_idx][1], 3, 1);
         C << obj.v_mat.block(0, obj.f_set[f_idx][2], 3, 1); 
- 
-        //scale and translate to the center of image
-        Vector3f center(width / 2, width / 2, 0);
-        A = A * width / 2 + center;
-        B = B * width / 2 + center;
-        C = C * width / 2 + center;
 
         // render triangle depth and update depth buffer
         render_triangle(A, B, C);
@@ -86,16 +86,9 @@ void BasicZBuffer::render()
             A << obj.v_mat.block(0, obj.f_set[f_idx][0], 3, 1);
             B << obj.v_mat.block(0, obj.f_set[f_idx][2], 3, 1);
             C << obj.v_mat.block(0, obj.f_set[f_idx][3], 3, 1); 
-    
-            //scale and translate to the center of image
-            Vector3f center(width / 2, width / 2, 0);
-            A = A * width / 2 + center;
-            B = B * width / 2 + center;
-            C = C * width / 2 + center;
 
             // render triangle depth and update depth buffer
             render_triangle(A, B, C);
-
         }
     }
 }

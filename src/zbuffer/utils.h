@@ -19,4 +19,7 @@ float cal_diffuse(Eigen::Vector3f A,
                   Eigen::Vector3f B, 
                   Eigen::Vector3f C);
 
+
+int get_level(int width, int height);
+
 #endif
