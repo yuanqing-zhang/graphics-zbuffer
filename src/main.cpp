@@ -48,13 +48,14 @@ void display(void)
 	    hiera_zbuff.render();
 	    glDrawPixels(width, height, GL_RGB, GL_FLOAT, hiera_zbuff.get_pixel());
     }
-    // else
-    // {
-    //     OctreeZBuffer octree_zbuff(width, height);
-    //     octree_zbuff.set_obj(obj);
-	//     octree_zbuff.render();
-	//     glDrawPixels(width, height, GL_RGB, GL_FLOAT, octree_zbuff.get_pixel());
-    // }
+    else
+    {
+        OctreeZBuffer octree_zbuff(width, height);
+        octree_zbuff.set_obj(obj);
+        cout << ">>> start recursive rendering..." << endl;
+	    octree_zbuff.recurr_render(octree_zbuff.octree_root);
+	    glDrawPixels(width, height, GL_RGB, GL_FLOAT, octree_zbuff.get_pixel());
+    }
 
     glFlush(); 
 }

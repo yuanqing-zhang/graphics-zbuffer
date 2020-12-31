@@ -19,7 +19,6 @@ void ZBuffer::render()
             float color = 0;
             for(int f_idx = 0; f_idx < obj.f_num; f_idx++)
             {
-                // word corordinate up->x, right->y, outward->z
                 Vector3f A, B, C;
                 A << obj.v_mat.block(0, obj.f_set[f_idx][0], 3, 1);
                 B << obj.v_mat.block(0, obj.f_set[f_idx][1], 3, 1);

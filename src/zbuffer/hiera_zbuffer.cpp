@@ -10,19 +10,22 @@ HieraZBuffer::HieraZBuffer(int w, int h) : width(w), height(h)
     pixels = new float[3 * width * height];
     // construct z-pyramid
     z_pyramid = ZPyramid(width, height);
-
 }
 
 
-bool HieraZBuffer::ztest(float minz, int minx, int miny, int maxx, int maxy)
+bool HieraZBuffer::ztest(float maxz, int minx, int miny, int maxx, int maxy)
 {
     // find the finest-level sample of the pyramid whose 
     // corresponding image region covers the bounding box of the polygon
     int cover_level = 0;
+    int x = maxx - minx;
+    int y = maxy - miny;
 
     while(true)
     {
-        if(minx == maxx && miny == maxy)
+        if(x >= y && (minx == maxx - 1 || minx == maxx))
+            break;
+        if(x < y && (miny == maxy - 1 || miny == maxy))
             break;
         minx = minx / 2;
         miny = miny / 2;
@@ -30,14 +33,14 @@ bool HieraZBuffer::ztest(float minz, int minx, int miny, int maxx, int maxy)
         maxy = maxy / 2;
         cover_level += 1;
     }
-    int p_maxz = z_pyramid.zvalue[cover_level][minx][miny];
+    int p_minz = z_pyramid.zvalue[cover_level][minx][miny];
 
-    if(p_maxz > minz)
+    if(p_minz > maxz)
         return false;
     else
         return true;
-
 }
+
 
 void HieraZBuffer::render_triangle(Vector3f A, Vector3f B, Vector3f C)
 {    
@@ -59,8 +62,8 @@ void HieraZBuffer::render_triangle(Vector3f A, Vector3f B, Vector3f C)
     if(maxx <= 3 || maxy <= 3) return;
 
     // test whether it is hidden
-    float minz = min(min(A(2), B(2)), C(2));
-    if(!ztest(minz, minx, maxx, miny, maxy))
+    float maxz = max(max(A(2), B(2)), C(2));
+    if(!ztest(maxz, minx, miny, maxx, maxy))
         return;
 
     // 2D projection of A,B,C
@@ -76,7 +79,6 @@ void HieraZBuffer::render_triangle(Vector3f A, Vector3f B, Vector3f C)
             Vector2f P(j, i);
             if(is_point_in_triangle(A_2d, B_2d, C_2d, P))
             {
-
                 float depth = cal_depth(A, B, C, P);
                 if(z_pyramid.zvalue[0][j][i] < depth)
                 {
@@ -94,11 +96,11 @@ void HieraZBuffer::render_triangle(Vector3f A, Vector3f B, Vector3f C)
 }
 
 
-void HieraZBuffer::render() 
+void HieraZBuffer::render()
 {
     for(int f_idx = 0; f_idx < obj.f_num; f_idx++)
     {
-        // word corordinate up->x, right->y, outward->z
+        // word corordinate right->x, up->y, inward->z
         Vector3f A, B, C;
         A << obj.v_mat.block(0, obj.f_set[f_idx][0], 3, 1);
         B << obj.v_mat.block(0, obj.f_set[f_idx][1], 3, 1);
@@ -106,17 +108,5 @@ void HieraZBuffer::render()
 
         // render triangle depth and update depth buffer
         render_triangle(A, B, C);
-
-        // handle quadrangle
-        if(obj.f_set[0].size() > 3)
-        {
-            Vector3f A, B, C;
-            A << obj.v_mat.block(0, obj.f_set[f_idx][0], 3, 1);
-            B << obj.v_mat.block(0, obj.f_set[f_idx][2], 3, 1);
-            C << obj.v_mat.block(0, obj.f_set[f_idx][3], 3, 1); 
-
-            // render triangle depth and update depth buffer
-            render_triangle(A, B, C);
-        }
     }
 }

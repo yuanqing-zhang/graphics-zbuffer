@@ -78,17 +78,5 @@ void BasicZBuffer::render()
 
         // render triangle depth and update depth buffer
         render_triangle(A, B, C);
-
-        // handle quadrangle
-        if(obj.f_set[0].size() > 3)
-        {
-            Vector3f A, B, C;
-            A << obj.v_mat.block(0, obj.f_set[f_idx][0], 3, 1);
-            B << obj.v_mat.block(0, obj.f_set[f_idx][2], 3, 1);
-            C << obj.v_mat.block(0, obj.f_set[f_idx][3], 3, 1); 
-
-            // render triangle depth and update depth buffer
-            render_triangle(A, B, C);
-        }
     }
 }

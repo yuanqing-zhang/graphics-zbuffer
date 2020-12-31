@@ -8,14 +8,17 @@ using namespace Eigen;
 
 #define REPORT_LOCATION __FILE__ << " " << __LINE__ << ": "
 
+
 inline bool is_line_valid(const string &line) {
 	return (line.empty() || line[0] == 13 || line[0] == '#');
 }
+
 
 inline void report_error(const string &info) {
 	cerr << "ERROR: in " << REPORT_LOCATION << info << endl;
 	assert(0);
 }
+
 
 void objLoader::initMat(fstream &f)
 {
@@ -52,6 +55,7 @@ void objLoader::initMat(fstream &f)
 
 }
 
+
 void objLoader::load_obj(string filename)
 {
 	string line;
@@ -67,7 +71,7 @@ void objLoader::load_obj(string filename)
 		return;
 	}
 
-	cout << "start reading obj file in " << filename << endl;
+	cout << ">>> start reading obj file in " << filename << endl;
 	initMat(f);
 
 	// read line by line
@@ -132,10 +136,24 @@ void objLoader::load_obj(string filename)
 
 	f.close();
 
-	MatrixXd::Index maxRow, maxCol;
-	float max = v_mat.maxCoeff(&maxRow,&maxCol);
+	MatrixXd::Index max_row, max_col;
+	float max = v_mat.maxCoeff(&max_row,&max_col);
 	v_mat = v_mat / max;
+
+	// handle quadrangle
+	if(f_set[0].size() > 3)
+	{
+		f_set.resize(f_num * 2);
+		for(int i = 0; i < f_num; i++)
+		{
+			f_set[f_num + i].push_back(f_set[i][0]);
+			f_set[f_num + i].push_back(f_set[i][2]);
+			f_set[f_num + i].push_back(f_set[i][3]);
+		}
+		f_num = f_num * 2;
+	}
 }
+
 
 void objLoader::rotate(Quaternionf q)
 {

@@ -80,3 +80,65 @@ int get_level(int width, int height)
 
     return level;
 }
+
+
+vector<Vector3f> get_8_b_min(Vector3f b_min, Vector3f b_max)
+{
+    vector<Vector3f> sub_b_min;
+    Vector3f b_center = (b_min + b_max) / 2;
+    sub_b_min.push_back(Vector3f(b_min(0), b_min(1),    b_min(2)));
+    sub_b_min.push_back(Vector3f(b_min(0), b_min(1),    b_center(2)));
+    sub_b_min.push_back(Vector3f(b_min(0), b_center(1), b_min(2)));
+    sub_b_min.push_back(Vector3f(b_min(0), b_center(1), b_center(2)));
+
+    sub_b_min.push_back(Vector3f(b_center(0), b_min(1),    b_min(2)));
+    sub_b_min.push_back(Vector3f(b_center(0), b_min(1),    b_center(2)));
+    sub_b_min.push_back(Vector3f(b_center(0), b_center(1), b_min(2)));
+    sub_b_min.push_back(Vector3f(b_center(0), b_center(1), b_center(2)));
+
+    return sub_b_min;
+}
+
+
+vector<Vector3f> get_8_b_max(Vector3f b_min, Vector3f b_max)
+{
+    vector<Vector3f> sub_b_max;
+    Vector3f b_center = (b_min + b_max) / 2;
+    sub_b_max.push_back(Vector3f(b_center(0), b_center(1), b_center(2)));
+    sub_b_max.push_back(Vector3f(b_center(0), b_center(1), b_max(2)));
+    sub_b_max.push_back(Vector3f(b_center(0), b_max(1), b_center(2)));
+    sub_b_max.push_back(Vector3f(b_center(0), b_max(1), b_max(2)));
+
+    sub_b_max.push_back(Vector3f(b_max(0), b_center(1), b_center(2)));
+    sub_b_max.push_back(Vector3f(b_max(0), b_center(1), b_max(2)));
+    sub_b_max.push_back(Vector3f(b_max(0), b_max(1), b_center(2)));
+    sub_b_max.push_back(Vector3f(b_max(0), b_max(1), b_max(2)));
+
+    return sub_b_max;
+}
+
+
+bool is_point_in_cube(Vector3f b_min, 
+                      Vector3f b_max,
+                      Vector3f P)
+{
+    if(P(0) > b_min(0) && P(0) < b_max(0)
+        && P(1) > b_min(1) && P(1) < b_max(1)
+        && P(2) > b_min(2) && P(2) < b_max(2))
+        return true;
+    return false;
+}
+
+
+bool is_contain(Vector3f b_min, 
+                Vector3f b_max, 
+                Vector3f A,
+                Vector3f B,
+                Vector3f C)
+{
+    if(is_point_in_cube(b_min, b_max, A) ||
+        is_point_in_cube(b_min, b_max,B) ||
+        is_point_in_cube(b_min, b_max,C))
+        return true;
+    return false;
+}

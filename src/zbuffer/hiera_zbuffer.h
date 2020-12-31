@@ -2,7 +2,7 @@
 #define _HIERA_ZBUFFER_H_
 
 #include "../io/obj.h"
-#include "z-pyramid.h"
+#include "z_pyramid.h"
 #include <Eigen/Dense>
 
 class HieraZBuffer
@@ -15,7 +15,7 @@ private:
     
 public:
     HieraZBuffer(int w, int h);
-    bool ztest(float minz, 
+    bool ztest(float maxz, 
                int minx, 
                int miny, 
                int maxx, 

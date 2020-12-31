@@ -1,25 +1,5 @@
-# ifndef _Z_PYRAMID_H_
-# define _Z_PYRAMID_H_
-
-# include "utils.h"
-
+#include "z_pyramid.h"
 using namespace std;
-
-class ZPyramid
-{
-private:
-    int width;  // width of the finest level
-    int height; // height of the finest level
-    int level;  // level of the Z pyramid
-
-public:
-    
-    float*** zvalue;
-    ZPyramid();
-    ZPyramid(int w, int h);
-
-    void update(int x, int y, float value);
-};
 
 ZPyramid::ZPyramid()
 {
@@ -66,5 +46,3 @@ void ZPyramid::update(int x, int y, float value)
             break;
     }
 }
-
-# endif
