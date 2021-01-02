@@ -25,6 +25,7 @@ public:
 	void rotate(Eigen::Quaternionf q);
 
 	size_t v_num, f_num, vn_num;
+	Eigen::Vector3f center;
 
 	Eigen::MatrixXf v_mat;  // vertices
 	Eigen::MatrixXf vn_mat;  // vertex normals

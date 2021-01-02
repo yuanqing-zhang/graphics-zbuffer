@@ -136,9 +136,14 @@ void objLoader::load_obj(string filename)
 
 	f.close();
 
-	MatrixXd::Index max_row, max_col;
-	float max = v_mat.maxCoeff(&max_row,&max_col);
-	v_mat = v_mat / max;
+	// normalize vertex
+	float max = v_mat.maxCoeff();
+	float min = v_mat.minCoeff();
+	v_mat = v_mat / (max - min);
+	
+	for(int i = 0; i < 3; i++)
+		center(i) = (v_mat.block(i, 0, 1, v_num).maxCoeff() 
+				+ v_mat.block(i, 0, 1, v_num).minCoeff()) / 2;
 
 	// handle quadrangle
 	if(f_set[0].size() > 3)

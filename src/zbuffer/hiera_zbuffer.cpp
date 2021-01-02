@@ -46,20 +46,20 @@ void HieraZBuffer::render_triangle(Vector3f A, Vector3f B, Vector3f C)
 {    
     //scale and translate to the center of image
     Vector3f center(width / 2, width / 2, 0);
-    A = A * width / 2 + center;
-    B = B * width / 2 + center;
-    C = C * width / 2 + center;
+    A = (A - obj.center) * width * 0.95 + center;
+    B = (B - obj.center) * width * 0.95 + center;
+    C = (C - obj.center) * width * 0.95 + center;
 
     // find bounding box of triangle
-    float minx = min(min(A(0), B(0)), C(0)) - 1;
-    float maxx = max(max(A(0), B(0)), C(0)) - 1;
+    float minx = min(min(A(0), B(0)), C(0));
+    float maxx = max(max(A(0), B(0)), C(0));
 
-    float miny = min(min(A(1), B(1)), C(1)) - 1;
-    float maxy = max(max(A(1), B(1)), C(1)) - 1;
+    float miny = min(min(A(1), B(1)), C(1));
+    float maxy = max(max(A(1), B(1)), C(1));
 
     // if triangle out of viewing frustum, then return
-    if(minx >= (height - 3) || miny >= (width - 3)) return;
-    if(maxx <= 3 || maxy <= 3) return;
+    if(minx >= height || miny >= width) return;
+    if(maxx <=0 || maxy <= 0) return;
 
     // test whether it is hidden
     float maxz = max(max(A(2), B(2)), C(2));
@@ -72,9 +72,9 @@ void HieraZBuffer::render_triangle(Vector3f A, Vector3f B, Vector3f C)
     B_2d = B.head(2);
     C_2d = C.head(2);
     
-    for(int i = miny; i < maxy; i++)
+    for(int i = miny; i <= maxy; i++)
     {
-        for(int j = minx; j < maxx; j++)
+        for(int j = minx; j <= maxx; j++)
         {
             Vector2f P(j, i);
             if(is_point_in_triangle(A_2d, B_2d, C_2d, P))

@@ -73,7 +73,7 @@ void OctreeZBuffer::set_obj(objLoader o)
     {
         Vector3f v;
         v << obj.v_mat.block(0, v_idx, 3, 1);
-        v = v * width / 2 + center;
+        v = (v - obj.center) * width * 0.95 + center;
         obj.v_mat.block(0, v_idx, 3, 1) = v;
     }
 
@@ -134,15 +134,15 @@ bool OctreeZBuffer::ztest(float maxz, int minx, int miny, int maxx, int maxy)
 void OctreeZBuffer::render_triangle(Vector3f A, Vector3f B, Vector3f C)
 {
     // find bounding box of triangle
-    float minx = min(min(A(0), B(0)), C(0)) - 1;
-    float maxx = max(max(A(0), B(0)), C(0)) - 1;
+    float minx = min(min(A(0), B(0)), C(0));
+    float maxx = max(max(A(0), B(0)), C(0));
 
-    float miny = min(min(A(1), B(1)), C(1)) - 1;
-    float maxy = max(max(A(1), B(1)), C(1)) - 1;
+    float miny = min(min(A(1), B(1)), C(1));
+    float maxy = max(max(A(1), B(1)), C(1));
 
-    // if triangle out of viewing frustum, then return
-    if(minx >= (height - 3) || miny >= (width - 3)) return;
-    if(maxx <= 3 || maxy <= 3) return;
+    // if triangle out of viewing frustum, then return    
+    if(minx >= height || miny >= width) return;
+    if(maxx <=0 || maxy <= 0) return;
 
     // 2D projection of A,B,C
     Vector2f A_2d, B_2d, C_2d;
@@ -150,9 +150,9 @@ void OctreeZBuffer::render_triangle(Vector3f A, Vector3f B, Vector3f C)
     B_2d = B.head(2);
     C_2d = C.head(2);
     
-    for(int i = miny; i < maxy; i++)
+    for(int i = miny; i <= maxy; i++)
     {
-        for(int j = minx; j < maxx; j++)
+        for(int j = minx; j <= maxx; j++)
         {
             Vector2f P(j, i);
             if(is_point_in_triangle(A_2d, B_2d, C_2d, P))

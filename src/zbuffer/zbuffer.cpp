@@ -26,9 +26,9 @@ void ZBuffer::render()
                 
                 //scale and translate to the center of image
                 Vector3f center(width / 2, width / 2, 0);
-                A = A * width / 2 + center;
-                B = B * width / 2 + center;
-                C = C * width / 2 + center;
+                A = (A - obj.center) * width * 0.95 + center;
+                B = (B - obj.center) * width * 0.95 + center;
+                C = (C - obj.center) * width * 0.95 + center;
 
                 Vector2f A_2d, B_2d, C_2d;
                 A_2d = A.head(2);

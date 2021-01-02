@@ -1,5 +1,6 @@
 #include "utils.h"
 #include <Eigen/Dense>
+#include <cmath>
 
 using namespace std;
 using namespace Eigen;
@@ -61,10 +62,10 @@ float cal_diffuse(Vector3f A,
     Vector3f face_normal = (B - A).cross(C - A);
     face_normal.normalize();
 
-    Vector3f light_dir(0, 0, -1);
+    Vector3f light_dir(-1, -1, -1);
     light_dir.normalize();
 
-    float diffuse = - face_normal.dot(light_dir);
+    float diffuse = abs(face_normal.dot(light_dir));
 
     return diffuse;
 }
