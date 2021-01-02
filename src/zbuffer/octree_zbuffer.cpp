@@ -41,11 +41,18 @@ OctreeNode *build(Vector3f b_min,
         A << v_mat.block(0, face_set[f_idx][0], 3, 1);
         B << v_mat.block(0, face_set[f_idx][1], 3, 1);
         C << v_mat.block(0, face_set[f_idx][2], 3, 1); 
+        bool is_f_contain = false;
         for (int i = 0; i < 8; i++)
         {
             if(is_contain(sub_b_min[i], sub_b_max[i], A, B, C))
+            {
                 sub_face_set[i].push_back(face_set[f_idx]);
+                is_f_contain = true;
+            }
         }
+        // if no sub-node contain, put in the current node
+        if(is_f_contain == false)
+            curr_node->f_set.push_back(face_set[f_idx]);
     }
     // recursive insertion
     for(int i = 0; i < 8; i++) 
@@ -168,8 +175,9 @@ void OctreeZBuffer::render_triangle(Vector3f A, Vector3f B, Vector3f C)
 }
 
 
-void OctreeZBuffer::recurr_render(OctreeNode *octree_node) 
+void OctreeZBuffer::recurr_render(OctreeNode *octree_node, int level) 
 {
+    // cout << "level " << level << ":" << octree_node->f_set.size() << endl;
     float minx = octree_node->bbox_min(0);
     float miny = octree_node->bbox_min(1);
     float maxx = octree_node->bbox_max(0);
@@ -183,25 +191,28 @@ void OctreeZBuffer::recurr_render(OctreeNode *octree_node)
     if(!ztest(octree_node->bbox_max(2), minx, miny, maxx, maxy))
         return;
 
+    // render current node
+    for(int f_idx = 0; f_idx < octree_node->f_set.size(); f_idx++)
+    {
+        Vector3f A, B, C;
+        A << obj.v_mat.block(0, octree_node->f_set[f_idx][0], 3, 1);
+        B << obj.v_mat.block(0, octree_node->f_set[f_idx][1], 3, 1);
+        C << obj.v_mat.block(0, octree_node->f_set[f_idx][2], 3, 1); 
+
+        // render triangle depth and update depth buffer
+        render_triangle(A, B, C);
+    }
+
     if(octree_node->is_leaf)
     {
-        for(int f_idx = 0; f_idx < octree_node->f_set.size(); f_idx++)
-        {
-            Vector3f A, B, C;
-            A << obj.v_mat.block(0, octree_node->f_set[f_idx][0], 3, 1);
-            B << obj.v_mat.block(0, octree_node->f_set[f_idx][1], 3, 1);
-            C << obj.v_mat.block(0, octree_node->f_set[f_idx][2], 3, 1); 
-
-            // render triangle depth and update depth buffer
-            render_triangle(A, B, C);
-        }
+        return;
     }
     else
     {
         // render sub-node from back to front
         for(int i = 7; i > 0; i--)
         {
-            recurr_render(octree_node->children[i]);
+            recurr_render(octree_node->children[i], level + 1);
         }
     }
 

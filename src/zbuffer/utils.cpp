@@ -136,8 +136,8 @@ bool is_contain(Vector3f b_min,
                 Vector3f B,
                 Vector3f C)
 {
-    if(is_point_in_cube(b_min, b_max, A) ||
-        is_point_in_cube(b_min, b_max,B) ||
+    if(is_point_in_cube(b_min, b_max, A) &&
+        is_point_in_cube(b_min, b_max,B) &&
         is_point_in_cube(b_min, b_max,C))
         return true;
     return false;

@@ -16,7 +16,7 @@ private:
     
 public:
     OctreeNode *octree_root;
-    
+
     OctreeZBuffer(int w, int h);
     bool ztest(float maxz, 
                int minx, 
@@ -26,7 +26,7 @@ public:
     void render_triangle(Eigen::Vector3f A, 
                          Eigen::Vector3f B, 
                          Eigen::Vector3f C);
-    void recurr_render(OctreeNode *octree_node);
+    void recurr_render(OctreeNode *octree_node, int level);
 
     float *get_pixel(){return pixels;}
     void set_obj(objLoader o);

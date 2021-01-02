@@ -31,6 +31,7 @@ void display(void)
     {
         ZBuffer zbuff(width, height);
         zbuff.set_obj(obj);
+        cout << ">>> start rendering..." << endl;
 	    zbuff.render();
 	    glDrawPixels(width, height, GL_RGB, GL_FLOAT, zbuff.get_pixel());
     }
@@ -38,6 +39,7 @@ void display(void)
     {
         BasicZBuffer basic_zbuff(width, height);
         basic_zbuff.set_obj(obj);
+        cout << ">>> start rendering..." << endl;
 	    basic_zbuff.render();
 	    glDrawPixels(width, height, GL_RGB, GL_FLOAT, basic_zbuff.get_pixel());
     }
@@ -45,6 +47,7 @@ void display(void)
     {
         HieraZBuffer hiera_zbuff(width, height);
         hiera_zbuff.set_obj(obj);
+        cout << ">>> start rendering..." << endl;
 	    hiera_zbuff.render();
 	    glDrawPixels(width, height, GL_RGB, GL_FLOAT, hiera_zbuff.get_pixel());
     }
@@ -53,7 +56,7 @@ void display(void)
         OctreeZBuffer octree_zbuff(width, height);
         octree_zbuff.set_obj(obj);
         cout << ">>> start recursive rendering..." << endl;
-	    octree_zbuff.recurr_render(octree_zbuff.octree_root);
+	    octree_zbuff.recurr_render(octree_zbuff.octree_root, 0);
 	    glDrawPixels(width, height, GL_RGB, GL_FLOAT, octree_zbuff.get_pixel());
     }
 
