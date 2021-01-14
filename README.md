@@ -42,9 +42,9 @@ make
 
 效果展示
 
-![](img/depth.png)
+![depth](img/depth.png)
 
-![](img/diffuse.png)
+![diffuse](img/diffuse.png)
 
 
 
