@@ -8,10 +8,10 @@ class ZPyramid
 private:
     int width;  // width of the finest level
     int height; // height of the finest level
-    int level;  // level of the Z pyramid
 
 public:
     
+    int level;  // level of the Z pyramid
     float*** zvalue;
     ZPyramid();
     ZPyramid(int w, int h);

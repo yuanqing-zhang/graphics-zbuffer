@@ -111,15 +111,19 @@ bool OctreeZBuffer::ztest(float maxz, int minx, int miny, int maxx, int maxy)
 
     while(true)
     {
-        if(x >= y && (minx == maxx - 1 || minx == maxx))
+        if(x >= y && (minx == maxx))
             break;
-        if(x < y && (miny == maxy - 1 || miny == maxy))
+        if(x < y && (miny == maxy))
             break;
         minx = minx / 2;
         miny = miny / 2;
         maxx = maxx / 2;
         maxy = maxy / 2;
         cover_level += 1;
+        
+        if(cover_level == z_pyramid.level - 1)
+            break;
+
     }
     int p_minz = z_pyramid.zvalue[cover_level][minx][miny];
 

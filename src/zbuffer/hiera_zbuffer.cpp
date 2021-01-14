@@ -32,6 +32,9 @@ bool HieraZBuffer::ztest(float maxz, int minx, int miny, int maxx, int maxy)
         maxx = maxx / 2;
         maxy = maxy / 2;
         cover_level += 1;
+        
+        if(cover_level == z_pyramid.level - 1)
+            break;
     }
     int p_minz = z_pyramid.zvalue[cover_level][minx][miny];
 
