@@ -157,6 +157,8 @@ void objLoader::load_obj(string filename)
 		}
 		f_num = f_num * 2;
 	}
+
+	cout << ">>> finish reading, totally " << f_num << " triangles" << endl;
 }
 
 

@@ -18,7 +18,7 @@ OctreeNode *build(Vector3f b_min,
                   MatrixXf v_mat,
                   vector<vector<int>> face_set)
 {
-    if(face_set.size() <= 3)
+    if(face_set.size() <= 10)
     {
         OctreeNode *leaf_node = new OctreeNode(b_min, b_max, true);
         for(int i = 0; i < face_set.size(); i++)
@@ -188,7 +188,7 @@ void OctreeZBuffer::recurr_render(OctreeNode *octree_node, int level)
     if(maxx <= 0 || maxy <= 0) return;
 
     // test whether current node is hidden
-    if(!ztest(octree_node->bbox_max(2), minx, miny, maxx, maxy))
+    if(!ztest(octree_node->bbox_max(2), minx, miny, maxx + 1, maxy + 1))
         return;
 
     // render current node
@@ -210,7 +210,7 @@ void OctreeZBuffer::recurr_render(OctreeNode *octree_node, int level)
     else
     {
         // render sub-node from back to front
-        for(int i = 7; i > 0; i--)
+        for(int i = 7; i >= 0; i--)
         {
             recurr_render(octree_node->children[i], level + 1);
         }

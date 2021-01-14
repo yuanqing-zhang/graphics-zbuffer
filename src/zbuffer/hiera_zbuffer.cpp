@@ -23,9 +23,9 @@ bool HieraZBuffer::ztest(float maxz, int minx, int miny, int maxx, int maxy)
 
     while(true)
     {
-        if(x >= y && (minx == maxx - 1 || minx == maxx))
+        if(x >= y && (minx == maxx))
             break;
-        if(x < y && (miny == maxy - 1 || miny == maxy))
+        if(x < y && (miny == maxy))
             break;
         minx = minx / 2;
         miny = miny / 2;
@@ -63,7 +63,7 @@ void HieraZBuffer::render_triangle(Vector3f A, Vector3f B, Vector3f C)
 
     // test whether it is hidden
     float maxz = max(max(A(2), B(2)), C(2));
-    if(!ztest(maxz, minx, miny, maxx, maxy))
+    if(!ztest(maxz, minx, miny, maxx + 1, maxy + 1))
         return;
 
     // 2D projection of A,B,C

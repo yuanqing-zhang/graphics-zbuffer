@@ -1,5 +1,6 @@
 #include <GLUT/glut.h> 
 #include <string>
+#include <ctime>
 
 #include "io/obj.h"
 #include "view/View.h"
@@ -32,7 +33,9 @@ void display(void)
         ZBuffer zbuff(width, height);
         zbuff.set_obj(obj);
         cout << ">>> start rendering..." << endl;
+        clock_t start = clock();
 	    zbuff.render();
+        cout << ">>> spend time:" << (double)(clock() - start) / CLOCKS_PER_SEC << endl;
 	    glDrawPixels(width, height, GL_RGB, GL_FLOAT, zbuff.get_pixel());
     }
     else if(type == "2")
@@ -40,7 +43,9 @@ void display(void)
         BasicZBuffer basic_zbuff(width, height);
         basic_zbuff.set_obj(obj);
         cout << ">>> start rendering..." << endl;
+        clock_t start = clock();
 	    basic_zbuff.render();
+        cout << ">>> spend time:" << (double)(clock() - start) / CLOCKS_PER_SEC << endl;
 	    glDrawPixels(width, height, GL_RGB, GL_FLOAT, basic_zbuff.get_pixel());
     }
     else if(type == "3")
@@ -48,7 +53,9 @@ void display(void)
         HieraZBuffer hiera_zbuff(width, height);
         hiera_zbuff.set_obj(obj);
         cout << ">>> start rendering..." << endl;
+        clock_t start = clock();
 	    hiera_zbuff.render();
+        cout << ">>> spend time:" << (double)(clock() - start) / CLOCKS_PER_SEC << endl;
 	    glDrawPixels(width, height, GL_RGB, GL_FLOAT, hiera_zbuff.get_pixel());
     }
     else
@@ -56,7 +63,9 @@ void display(void)
         OctreeZBuffer octree_zbuff(width, height);
         octree_zbuff.set_obj(obj);
         cout << ">>> start recursive rendering..." << endl;
+        clock_t start = clock();
 	    octree_zbuff.recurr_render(octree_zbuff.octree_root, 0);
+        cout << ">>> spend time:" << (double)(clock() - start) / CLOCKS_PER_SEC << endl;
 	    glDrawPixels(width, height, GL_RGB, GL_FLOAT, octree_zbuff.get_pixel());
     }
 
@@ -79,10 +88,10 @@ int main(int argc, char *argv[])
 
     //load obj file and rotate
 	obj.load_obj(filepath);
-    Quaternionf q(cos((M_PI / 2) / 2), 
-				  0 * sin((M_PI / 2) / 2), 
-				  0 * sin((M_PI / 2) / 2), 
-				  1 * sin((M_PI / 2) / 2));
+    // Quaternionf q(cos((M_PI ) / 2), 
+	// 			  0 * sin((M_PI / 2) / 2), 
+	// 			  1 * sin((M_PI) / 2), 
+	// 			  0 * sin((M_PI / 2) / 2));
     // obj.rotate(q);
 
     glutInit(&argc, argv); 
