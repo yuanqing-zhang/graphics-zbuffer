@@ -61,7 +61,9 @@ void display(void)
     else
     {
         OctreeZBuffer octree_zbuff(width, height);
+        clock_t start1 = clock();
         octree_zbuff.set_obj(obj);
+        cout << ">>> build octree:" << (double)(clock() - start1) / CLOCKS_PER_SEC << endl;
         cout << ">>> start recursive rendering..." << endl;
         clock_t start = clock();
 	    octree_zbuff.recurr_render(octree_zbuff.octree_root, 0);

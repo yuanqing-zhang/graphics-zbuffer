@@ -10,9 +10,8 @@ private:
     int height; // height of the finest level
 
 public:
-    
     int level;  // level of the Z pyramid
-    float*** zvalue;
+    float*** zvalue; // depth buffer pyramid
     ZPyramid();
     ZPyramid(int w, int h);
 

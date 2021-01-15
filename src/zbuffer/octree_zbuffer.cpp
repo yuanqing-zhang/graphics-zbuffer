@@ -120,7 +120,7 @@ bool OctreeZBuffer::ztest(float maxz, int minx, int miny, int maxx, int maxy)
         maxx = maxx / 2;
         maxy = maxy / 2;
         cover_level += 1;
-        
+
         if(cover_level == z_pyramid.level - 1)
             break;
 
@@ -219,5 +219,4 @@ void OctreeZBuffer::recurr_render(OctreeNode *octree_node, int level)
             recurr_render(octree_node->children[i], level + 1);
         }
     }
-
 }

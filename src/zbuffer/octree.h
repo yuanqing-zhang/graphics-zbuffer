@@ -7,7 +7,7 @@
 class OctreeNode
 {
 public:
-    Eigen::Vector3f bbox_min;
+    Eigen::Vector3f bbox_min;  // bounding box of node
     Eigen::Vector3f bbox_max;
     /* 
     pointers to child octants
@@ -17,7 +17,7 @@ public:
         z:  0 1 0 1 0 1 0 1 
     */
     OctreeNode *children[8];   
-    std::vector<std::vector<int>> f_set;  // index of vertices
+    std::vector<std::vector<int>> f_set;  // faces in this node
     bool is_leaf;
     
 
