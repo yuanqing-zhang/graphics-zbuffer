@@ -3,7 +3,6 @@
 #include <ctime>
 
 #include "io/obj.h"
-#include "view/View.h"
 #include "zbuffer/zbuffer.h"
 #include "zbuffer/basic_zbuffer.h"
 #include "zbuffer/hiera_zbuffer.h"
@@ -15,7 +14,6 @@ using namespace Eigen;
 
 int width = 512;
 int height = 512;
-View view;
 string type;
 objLoader obj;
 
@@ -61,9 +59,7 @@ void display(void)
     else
     {
         OctreeZBuffer octree_zbuff(width, height);
-        clock_t start1 = clock();
         octree_zbuff.set_obj(obj);
-        cout << ">>> build octree:" << (double)(clock() - start1) / CLOCKS_PER_SEC << endl;
         cout << ">>> start recursive rendering..." << endl;
         clock_t start = clock();
 	    octree_zbuff.recurr_render(octree_zbuff.octree_root, 0);

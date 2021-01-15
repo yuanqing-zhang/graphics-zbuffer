@@ -1,5 +1,4 @@
-# ifndef _Z_PYRAMID_H_
-# define _Z_PYRAMID_H_
+#pragma once
 
 # include "utils.h"
 
@@ -18,4 +17,3 @@ public:
     void update(int x, int y, float value);
 };
 
-# endif

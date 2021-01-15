@@ -1,5 +1,4 @@
-#ifndef _OCTREE_H_
-#define _OCTREE_H_
+#pragma once
 
 #include <vector>
 #include <Eigen/Dense>
@@ -27,5 +26,3 @@ public:
                bool is_leaf);
 
 };
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef _UTILS_H_
-#define _UTILS_H_
+#pragma once
 
 #include<vector>
 #include <Eigen/Dense>
@@ -44,5 +43,3 @@ bool is_contain(Eigen::Vector3f b_min,
                 Eigen::Vector3f A,
                 Eigen::Vector3f B,
                 Eigen::Vector3f C);
-
-#endif

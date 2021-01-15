@@ -1,5 +1,4 @@
-#ifndef _OCTREE_ZBUFFER_H_
-#define _OCTREE_ZBUFFER_H_
+#pragma once
 
 #include "../io/obj.h"
 #include "octree.h"
@@ -32,5 +31,3 @@ public:
     void set_obj(objLoader o);
     
 };
-
-#endif

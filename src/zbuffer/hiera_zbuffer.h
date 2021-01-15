@@ -1,5 +1,4 @@
-#ifndef _HIERA_ZBUFFER_H_
-#define _HIERA_ZBUFFER_H_
+#pragma once
 
 #include "../io/obj.h"
 #include "z_pyramid.h"
@@ -29,5 +28,3 @@ public:
     void set_obj(objLoader o){obj = o;}
 
 };
-
-#endif
