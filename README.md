@@ -1,15 +1,6 @@
 # graphics-zbuffer
 
-**编程环境：**
-
-- 操作系统：macOS 11.0.1
-- 编译工具：cMake 3.18.2
-- 库：Eigen 3.3.7，OpenGL，GLUT
-
-
-
-**使用：**
-
+### Usage:
 ```shell
 mkdir build
 cd build
@@ -23,8 +14,7 @@ make
 ```
 
 
-
-**效果展示**
+### Result:
 
 ![depth](img/depth.png)
 
